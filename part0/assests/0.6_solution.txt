@@ -1,0 +1,13 @@
+note over browser:
+the submited note is rendered
+in the browser using the javascript
+code fetched from the server
+end note
+
+note over browser:
+then the content and timestamp of the
+note is sent in the body of POST request
+end note
+
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa 
+server-->browser: HTTP status code 201 created
