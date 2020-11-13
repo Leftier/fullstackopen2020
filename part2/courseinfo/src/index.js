@@ -25,11 +25,23 @@ const Part = ({name, exercises}) => {
   )
 }
 
+const Total = ({parts}) => {
+  let result = 0
+  parts.forEach(element => {
+    result += element.exercises
+  });
+  
+  return (
+    <p><strong>total of {result} exercises</strong></p>
+  );
+}
+
 const Course = ({course}) => {
   return (
     <div>
       <Header course={course.name} />
       <Content parts={course.parts} />
+      <Total parts={course.parts} />
     </div>
   )
 } 
