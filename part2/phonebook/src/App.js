@@ -51,6 +51,22 @@ const App = () => {
       })
   }
 
+  const remove = (event) => {
+    const id = parseInt(event.target.value)
+    const person = persons.find(person => person.id === id)
+    console.log(person)
+    if (window.confirm("Delete " + person.name)) { 
+      personService
+      .remove(id)
+      .then(() => 
+        setPersons(persons.filter(person => 
+          person.id !== id)
+        )
+      )
+      .catch(() => console.log("Error deleting"))
+    }
+  }
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -63,7 +79,7 @@ const App = () => {
       
       <h3>Numbers</h3>
 
-      <Persons persons={persons} filter={filterName}/>
+      <Persons persons={persons} filter={filterName} handleRemove={remove} />
 
     </div>
   )
