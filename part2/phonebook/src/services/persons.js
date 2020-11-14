@@ -21,9 +21,13 @@ const remove = id => {
   return request.then(response => response.data)
 }
 
-export default { 
+//[ Apparently using export default with a lot of const causes a warning 
+//[ so im creating a unique const to use as default
+export const personService = {
   getAll, 
   create,
   update,
   remove
 }
+
+export default personService
