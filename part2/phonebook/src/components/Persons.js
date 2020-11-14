@@ -1,7 +1,6 @@
 import React from 'react'
 
 const Persons = ({persons, filter}) => {
-  console.log(persons, filter);
   return (
     <>
       {persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase())).map(person =>
