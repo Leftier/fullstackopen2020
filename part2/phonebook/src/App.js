@@ -12,6 +12,7 @@ const App = () => {
   const [ newNumber, setNewNumber ] = useState('')
   const [ filterName, setFilterName ] = useState('')
   const [ message, setMessage ] = useState(null)
+  const [ messageError, setMessageError ] = useState(null)
 
   useEffect(() => {
     personService
@@ -47,9 +48,10 @@ const App = () => {
         }, 5000)
       })
       .catch(() => {
-        alert(
-          `${person.name} was already deleted from server`
-        )
+        setMessageError(`${changedPerson.name} was previously removed from server`)
+        setTimeout(() => {
+          setMessageError(null)
+        }, 5000)
         setPersons(persons.filter(person => person.id !== changedPerson.id))
       })
   }
@@ -81,9 +83,8 @@ const App = () => {
 
   const remove = (event) => {
     const id = parseInt(event.target.value)
-    const person = persons.find(person => person.id === id)
-    console.log(person)
-    if (window.confirm("Delete " + person.name)) { 
+    const personToRemove = persons.find(person => person.id === id)
+    if (window.confirm("Delete " + personToRemove.name)) { 
       personService
       .remove(id)
       .then(() => 
@@ -91,7 +92,13 @@ const App = () => {
           person.id !== id)
         )
       )
-      .catch(() => console.log("Error deleting"))
+      .catch(() => {
+        setMessageError(`${personToRemove.name} was already removed from server`)
+        setTimeout(() => {
+          setMessageError(null)
+        }, 5000)
+        setPersons(persons.filter(person => person.id !== personToRemove.id))
+      })
     }
   }
 
@@ -99,6 +106,7 @@ const App = () => {
     <div>
       <h2>Phonebook</h2>
       <Notification message={message} />
+      <Notification message={messageError} error={true} />
 
       <Filter value={filterName} onChange={handleFilterChange} />
 
