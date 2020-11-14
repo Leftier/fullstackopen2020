@@ -30,11 +30,28 @@ const App = () => {
     setFilterName(event.target.value)
   }
 
+  const handleUpdate = (person) => {
+    const changedPerson = { ...person, number: newNumber }
+    personService
+      .update(changedPerson.id, changedPerson)
+      .then(returnedPerson => {
+        setNewName('')
+        setNewNumber('')
+        setPersons(persons.map(person => person.id !== returnedPerson.id ? person : returnedPerson))
+      })
+      .catch(() => {
+        alert(
+          `${person.name} was already deleted from server`
+        )
+        setPersons(persons.filter(person => person.id !== changedPerson.id))
+      })
+  }
+
   const addName = (event) => {
     event.preventDefault()
-    if(persons.some(person => person.name === newName)) {
-      alert(`${newName} is already added to phonebook`)
-      return
+    const person = persons.find(person => person.name === newName)
+    if(person && window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
+      return handleUpdate(person)
     }
 
     const personObject = {
