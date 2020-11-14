@@ -15,6 +15,10 @@ const App = () => {
       })
   }, [])
 
+  const showCountry = (event) => {
+    setFilterCountries(event.target.value)
+  }
+
   const handleFilterChange = (event) => {
     setFilterCountries(event.target.value.trim())
   }
@@ -22,7 +26,7 @@ const App = () => {
   return (
     <div>
       <Filter value={filterCountries} onChange={handleFilterChange} />
-      <Countries countries={countries} filter={filterCountries} />
+      <Countries countries={countries} filter={filterCountries} handleClick={showCountry} />
     </div>
   )
 }
