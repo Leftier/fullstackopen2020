@@ -1,4 +1,3 @@
-const { response } = require('express')
 const express = require('express')
 const app = express()
 app.use(express.json())
@@ -18,6 +17,11 @@ let persons = [
     name: "Dan Abramov",
     number: "12-43-234345",
     id: 3
+  },
+  {
+    name: "Test",
+    number: "12-43-234345",
+    id: 4
   }
 ]
 
@@ -25,7 +29,7 @@ app.get('/', (request, response) => {
   response.json(persons)
 })
 
-app.get('/persons', (request, response) => {
+app.get('/api/persons', (request, response) => {
   response.json(persons)
 })
 
@@ -43,6 +47,13 @@ app.get('/api/persons/:id', (request, response) => {
   } else {
     response.status(404).end()
   }
+})
+
+app.delete('/api/persons/:id', (request, response) => {
+  const id = Number(request.params.id)
+  persons = persons.filter(person => person.id !== id)
+
+  response.status(204).end()
 })
 
 const PORT = 3001
