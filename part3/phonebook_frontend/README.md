@@ -1,4 +1,6 @@
-# Part 2
+# Part 3
 
-## Improvements upon courseinfo project
-## Exercises 2.6-2.11
+To deploy the app we must go to phone_backend directory and run:
+```consola
+$ npm run deploy:full
+```
