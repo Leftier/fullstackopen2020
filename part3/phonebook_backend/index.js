@@ -70,20 +70,14 @@ app.post('/api/persons', (request, response) => {
     })
   }
 
-  if(persons.find(person => person.name === body.name)) {
-    return response.status(400).json({ 
-      error: 'name must be unique'
-    })
-  }
-
-  const person = {
+  const person = new Person({
     name: body.name,
-    number: body.number,
-    id: Math.floor(Math.random() * 2000)
-  }
+    number: body.number
+  })
 
-  persons = persons.concat(person)
-  response.json(person)
+  person.save().then(savedPerson => {
+    response.json(savedPerson.toJSON())
+  })
 })
 
 const unknownEndpoint = (request, response) => {
